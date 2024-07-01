@@ -1,0 +1,2 @@
+node paste.js
+pause

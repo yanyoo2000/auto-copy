@@ -1,0 +1,2 @@
+node copy.js
+pause

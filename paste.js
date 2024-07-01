@@ -1,5 +1,5 @@
-import fs from "fs";
 import clipboardy from "clipboardy";
+import fs from "fs";
 
 let targetFile = "\\\\Client\\D$\\clipboard.txt";
 
@@ -9,7 +9,7 @@ let times = 0;
 // 定义一个函数用于保存剪切板内容到txt文件
 const writeTextToClipboard = () => {
   try {
-    const newFileContent = fs.readFileSync(targetFile, "utf8");
+    const newFileContent = fs.readFileSync(targetFile, "utf8").trim()
     if (newFileContent !== lastFileContent || times === 0) {
       clipboardy.writeSync(newFileContent);
       console.log(times + ". 文件内容已复制到剪切板");
