@@ -2,7 +2,6 @@ import clipboardy from "clipboardy";
 import fs from "fs";
 
 let targetFile = "\\\\Client\\D$\\clipboard.txt";
-
 let lastFileContent = fs.readFileSync(targetFile, "utf8");
 let times = 0;
 
