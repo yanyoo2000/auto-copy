@@ -1,11 +1,17 @@
 import clipboardy from "clipboardy";
 import fs from "fs";
 
-let lastClipboardContent = clipboardy.readSync();
+let lastClipboardContent = "";
 let times = 1;
 let isClipboardContentString = true;
 
-// 定义一个函数用于保存剪切板内容到txt文件
+// 初始化 lastClipboardContent
+try {
+  lastClipboardContent = clipboardy.readSync();
+} catch (error) {
+  console.log("初始化时剪切板内容不是string或为空，设置为默认值");
+}
+
 const saveClipboardToTxt = (text) => {
   try {
     fs.writeFileSync("D:\\clipboard.txt", text + "\n");
@@ -18,10 +24,12 @@ const saveClipboardToTxt = (text) => {
   }
 };
 
-// 定时检查剪切板内容变化并保存到txt文件
 const intervalId = setInterval(() => {
   try {
     const text = clipboardy.readSync();
+    if (typeof text !== 'string') {
+      throw new Error("剪切板内容不是string");
+    }
     if (text !== lastClipboardContent) {
       saveClipboardToTxt(text);
       lastClipboardContent = text;
@@ -30,14 +38,13 @@ const intervalId = setInterval(() => {
     if (!isClipboardContentString) {
       return;
     }
-    console.log("跳过...当前剪切板的内容不是string ");
+    console.log("跳过...当前剪切板的内容不是string或为空");
     isClipboardContentString = false;
   }
-}, 1000); // 每秒检查一次
+}, 1000);
 
 console.log("正在监听剪切板内容…");
 
-// 程序结束时清理定时器
 process.on("SIGINT", () => {
   clearInterval(intervalId);
   console.log("程序结束，清理定时器");
