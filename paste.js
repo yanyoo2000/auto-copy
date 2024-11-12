@@ -21,12 +21,11 @@ const writeTextToClipboard = () => {
   }
 };
 
-writeTextToClipboard();
 // 定时检查文件内容变化并复制到剪贴板
+writeTextToClipboard();
 const intervalId = setInterval(() => {
   writeTextToClipboard();
-}, 1000); // 每秒检查一次
-
+}, 500);
 console.log("正在监听文件内容变化...");
 
 // 程序结束时清理定时器
